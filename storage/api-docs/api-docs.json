@@ -1,0 +1,62 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "SaaS portfolio part2",
+        "version": "0.1"
+    },
+    "paths": {
+        "/api/users": {
+            "get": {
+                "summary": "Finds Users using paginations",
+                "operationId": "924d8d24976411c696dda3890c99a106",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Pages to filter by",
+                        "schema": {
+                            "type": "int"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Number of users per pages to filter by",
+                        "schema": {
+                            "type": "int"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Browse the list of all users"
+                    }
+                }
+            }
+        },
+        "/api/users/{id}": {
+            "get": {
+                "summary": "Finds Users by user id",
+                "operationId": "9012a3c51aa9c8f370ac1b21dd90eb55",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User id to filter by",
+                        "schema": {
+                            "type": "int"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Show selected user"
+                    },
+                    "400": {
+                        "description": "Show error when user not Found"
+                    }
+                }
+            }
+        }
+    }
+}

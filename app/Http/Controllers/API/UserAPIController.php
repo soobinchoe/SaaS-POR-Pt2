@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
+
 class UserAPIController extends Controller
 {
     //
@@ -15,6 +16,16 @@ class UserAPIController extends Controller
      * Display a listing of the resource.
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     */
+    /**
+     *
+     * @OA\Get(
+     *     path="/api/users",
+     *     summary="Finds Users using paginations",
+     *     @OA\Parameter(name="page", in="query", description="Pages to filter by", @OA\Schema(type="int")),
+     *     @OA\Parameter(name="per_page", in="query", description="Number of users per pages to filter by", @OA\Schema(type="int")),
+     *     @OA\Response(response="200", description="Browse the list of all users")
+     * )
      */
     public function index(PaginateAPIRequest $request): JsonResponse
     {
@@ -63,6 +74,16 @@ class UserAPIController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     */
+    /**
+     *
+     * @OA\Get(
+     *     path="/api/users/{id}",
+     *     summary="Finds Users by user id",
+     *     @OA\Parameter(name="id", in="path", description="User id to filter by", @OA\Schema(type="int")),
+     *     @OA\Response(response="200", description="Show selected user"),
+     *     @OA\Response(response="404", description="Show error when user not Found")
+     * )
      */
     public function show($id)
     {
