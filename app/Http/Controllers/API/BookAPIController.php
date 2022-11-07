@@ -139,7 +139,7 @@ class BookAPIController extends Controller
 
         if (!is_null($book) && $book->count() > 0) {
             $book['title'] = $validated['title'];
-            $book['subtitle'] = $validated['subtitle'];
+            $book['subtitle'] = $validated['subtitle'] ?? null;
             $book->save();
             $response = response()->json(
                 [
@@ -163,7 +163,7 @@ class BookAPIController extends Controller
     public function destroy($id)
     {
         //
-        $book = Book::query()->where('id', id)->first();
+        $book = Book::query()->where('id', $id)->first();
 
         $destroyedBook = $book;
 

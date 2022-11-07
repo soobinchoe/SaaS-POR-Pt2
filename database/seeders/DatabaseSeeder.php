@@ -22,10 +22,10 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             UserSeeder::class,
-            PublisherSeeder::class,
             AuthorSeeder::class,
-            BookSeeder::class,
+            PublisherSeeder::class,
             GenreSeeder::class,
+            BookSeeder::class,
         ]);
     }
 }

@@ -78,7 +78,7 @@ class GenreAPIController extends Controller
             $response = response()->json(
                 [
                     'status' => false,
-                    'message' => "Author exists.",
+                    'message' => "Genre exists.",
                     'data' => [
                         'genre' => $genre,
                     ],
@@ -140,7 +140,7 @@ class GenreAPIController extends Controller
     {
         //
         $validated = $request->validated();
-        $genre = Genre::query()->where('id', $id)->get();
+        $genre = Genre::query()->where('id', $id)->first();
 
         $response = response()->json(
             [
@@ -153,7 +153,8 @@ class GenreAPIController extends Controller
 
         if (!is_null($genre) && $genre->count() > 0) {
             $genre['name'] = $validated['name'];
-            $genre['description'] = $validated['description'];
+            $genre['description'] = $validated['description'] ?? null;
+
             $genre->save();
             $response = response()->json(
                 [
@@ -176,7 +177,7 @@ class GenreAPIController extends Controller
     public function destroy($id)
     {
         //
-        $genre = Genre::query()->where('id', $id)->get();
+        $genre = Genre::query()->where('id', $id)->first();
 
         $destroyedGenre = $genre;
 

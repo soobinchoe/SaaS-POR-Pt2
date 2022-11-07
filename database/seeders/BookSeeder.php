@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Author;
 use App\Models\Book;
+use App\Models\Genre;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -270,6 +271,16 @@ class BookSeeder extends Seeder
                 $author = Author::create($newAuthor);
             }
 
+            # check if genre exists, if not, add new genre
+            $genreName = $book['genre'];
+            $genre = Genre::whereName($genreName)->first();
+            if (is_null($genre)) {
+                $newGenre = [
+                    "name" => $genreName
+                ];
+                $genre = Genre::create($newGenre);
+            }
+
             # Create book record
             $newBook = [
                 'title' => $book['title'] ?? null,
@@ -286,6 +297,7 @@ class BookSeeder extends Seeder
 
             # Link the author to the book
             $theBook->authors()->attach($author);
+            $theBook->genres()->attach($genre);
 
             $progressBar->advance();
         }

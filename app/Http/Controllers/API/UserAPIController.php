@@ -13,7 +13,7 @@ class UserAPIController extends Controller
     //
     /**
      * Display a listing of the resource.
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function index(PaginateAPIRequest $request): JsonResponse
@@ -21,7 +21,8 @@ class UserAPIController extends Controller
         //
 
 //        $user = User::all();
-        $users = User::paginate($request['per_page']);
+        $validated = $request->validated();
+        $users = User::paginate($validated['per_page']);
 
         return response()->json(
             [

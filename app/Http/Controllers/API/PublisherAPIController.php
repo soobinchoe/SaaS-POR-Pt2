@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePublisherAPIRequest;
 use App\Http\Requests\UpdatePublisherAPIRequest;
 use App\Models\Publisher;
 use Illuminate\Http\Request;
@@ -34,11 +35,44 @@ class PublisherAPIController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(StorePublisherAPIRequest $request)
     {
         //
+        $validated = $request->validated();
+
+        $publisher = Publisher::query()->where('name',$request['name'])->first();
+
+        if (is_null($publisher)) {
+            $publisher = Publisher::create($validated);
+
+            $response = response()->json(
+                [
+                    'success' => true,
+                    'message' => "Created successfully.",
+                    'data' => [
+                        'publisher' => $publisher,
+                    ],
+                ],
+                200
+            );
+        } else {
+            $response = response()->json(
+                [
+                    'status' => false,
+                    'message' => "Publisher exists.",
+                    'data' => [
+                        'publisher' => $publisher,
+                                                                                                'SECURITY'=>'yOu gOt HaCkEd'
+                    ],
+                ],
+                202
+            );
+        }
+
+        return $response;
+
     }
 
     /**
