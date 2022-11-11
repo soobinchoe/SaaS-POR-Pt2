@@ -15,6 +15,14 @@ class BookAPIController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
+    /**
+     *
+     * @OA\Get(
+     *     path="/api/books",
+     *     summary="Finds the list of all books ",
+     *     @OA\Response(response="200", description="Browse the list of all books")
+     * )
+     */
     public function index()
     {
         //
@@ -36,6 +44,16 @@ class BookAPIController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
+     */
+    /**
+     *
+     * @OA\Post(
+     *     path="/api/books",
+     *     summary="Store new book",
+     *     @OA\Parameter(name="title", in="query", description="Title of the book", @OA\Schema(type="string")),
+     *     @OA\Parameter(name="subtitle", in="query", description="Subtitle of the book", @OA\Schema(type="string")),
+     *     @OA\Response(response="200", description="Successfully Store new books")
+     * )
      */
     public function store(StoreBookAPIRequest $request)
     {
@@ -80,6 +98,16 @@ class BookAPIController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
+    /**
+     *
+     * @OA\Get(
+     *     path="/api/books/{id}",
+     *     summary="Finds Books by book id",
+     *     @OA\Parameter(name="id", in="path", description="Book id to filter by", @OA\Schema(type="int")),
+     *     @OA\Response(response="200", description="Show selected Book"),
+     *     @OA\Response(response="404", description="Show error when Book not Found")
+     * )
+     */
     public function show($id)
     {
         //
@@ -122,6 +150,18 @@ class BookAPIController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
+    /**
+     *
+     * @OA\Patch(
+     *     path="/api/books/{id}",
+     *     summary="Update the book",
+     *     @OA\Parameter(name="id", in="path", description="id of the book", @OA\Schema(type="int")),
+     *     @OA\Parameter(name="title", in="query", description="Title of the book", @OA\Schema(type="string")),
+     *     @OA\Parameter(name="subtitle", in="query", description="Subtitle of the book", @OA\Schema(type="string")),
+     *     @OA\Response(response="200", description="Update the book"),
+     *     @OA\Response(response="404", description="Show error when book not Found")
+     * )
+     */
     public function update(UpdateBookAPIRequest $request, $id)
     {
         //
@@ -159,6 +199,16 @@ class BookAPIController extends Controller
      *
      * @param int $id
      * @return \Illuminate\Http\Response
+     */
+    /**
+     *
+     * @OA\Delete(
+     *     path="/api/books/{id}",
+     *     summary="Delete the book",
+     *     @OA\Parameter(name="id", in="path", description="Book id to filter by", @OA\Schema(type="int")),
+     *     @OA\Response(response="200", description="Successfully delete the book"),
+     *     @OA\Response(response="404", description="Show error when book not Found")
+     * )
      */
     public function destroy($id)
     {

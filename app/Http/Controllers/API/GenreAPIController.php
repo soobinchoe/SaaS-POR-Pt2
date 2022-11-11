@@ -15,6 +15,14 @@ class GenreAPIController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
+    /**
+     *
+     * @OA\Get(
+     *     path="/api/genres",
+     *     summary="Finds the list of all genres ",
+     *     @OA\Response(response="200", description="Browse the list of all genres")
+     * )
+     */
     public function index()
     {
         //
@@ -51,6 +59,16 @@ class GenreAPIController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
+     */
+    /**
+     *
+     * @OA\Post(
+     *     path="/api/genres",
+     *     summary="Store new genre",
+     *     @OA\Parameter(name="name", in="query", description="name of the genre", @OA\Schema(type="string")),
+     *     @OA\Parameter(name="description", in="query", description="description of the genre", @OA\Schema(type="string")),
+     *     @OA\Response(response="200", description="Successfully Store new genre")
+     * )
      */
     public function store(StoreGenreAPIRequest $request)
     {
@@ -95,6 +113,16 @@ class GenreAPIController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
+    /**
+     *
+     * @OA\Get(
+     *     path="/api/genres/{id}",
+     *     summary="Finds genre by genre id",
+     *     @OA\Parameter(name="id", in="path", description="Genre id to filter by", @OA\Schema(type="int")),
+     *     @OA\Response(response="200", description="Show selected genre"),
+     *     @OA\Response(response="404", description="Show error when genre not Found")
+     * )
+     */
     public function show($id)
     {
         //
@@ -136,6 +164,18 @@ class GenreAPIController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
+    /**
+     *
+     * @OA\Patch(
+     *     path="/api/genres/{id}",
+     *     summary="Update the genre",
+     *     @OA\Parameter(name="id", in="path", description="id of the genre", @OA\Schema(type="int")),
+     *     @OA\Parameter(name="name", in="query", description="name of the genre", @OA\Schema(type="string")),
+     *     @OA\Parameter(name="description", in="query", description="description of the genre", @OA\Schema(type="string")),
+     *     @OA\Response(response="200", description="Update the genre"),
+     *     @OA\Response(response="404", description="Show error when genre not Found")
+     * )
+     */
     public function update(UpdateGenreAPIRequest $request, $id)
     {
         //
@@ -173,6 +213,16 @@ class GenreAPIController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
+     */
+    /**
+     *
+     * @OA\Delete(
+     *     path="/api/genres/{id}",
+     *     summary="Delete the genre",
+     *     @OA\Parameter(name="id", in="path", description="Genre id to filter by", @OA\Schema(type="int")),
+     *     @OA\Response(response="200", description="Successfully delete the genre"),
+     *     @OA\Response(response="404", description="Show error when genre not Found")
+     * )
      */
     public function destroy($id)
     {

@@ -32,7 +32,7 @@ class PaginateAPIRequest extends FormRequest
             ],
             'per_page'=>[
               'min:1',
-              'max:3',
+              'max:10',
               'integer'
             ],
         ];

@@ -5,6 +5,488 @@
         "version": "0.1"
     },
     "paths": {
+        "/api/authors": {
+            "get": {
+                "summary": "Finds the list of all authors ",
+                "operationId": "76d3ed20fa87acaf0c03065b03ec5cfa",
+                "responses": {
+                    "200": {
+                        "description": "Browse the list of all authors"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Store new author",
+                "operationId": "78b0dc6c2dd4a8e87bda6852cefa9d9d",
+                "parameters": [
+                    {
+                        "name": "given_name",
+                        "in": "query",
+                        "description": "given name of the author",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "family_name",
+                        "in": "query",
+                        "description": "family name of the book",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully Store new author"
+                    }
+                }
+            }
+        },
+        "/api/authors/{id}": {
+            "get": {
+                "summary": "Finds authors by author id",
+                "operationId": "3015af83cc37c3dcfb442fa4c7a53565",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Author id to filter by",
+                        "schema": {
+                            "type": "int"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Show selected Author"
+                    },
+                    "404": {
+                        "description": "Show error when Author not Found"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete the author",
+                "operationId": "9e2cc8b9f0b308755b27603b37d2b688",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Author id to filter by",
+                        "schema": {
+                            "type": "int"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully delete the author"
+                    },
+                    "404": {
+                        "description": "Show error when author not Found"
+                    }
+                }
+            },
+            "patch": {
+                "summary": "Update the author",
+                "operationId": "39fa31c35696bb859a5b54c2e13792d1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of the author",
+                        "schema": {
+                            "type": "int"
+                        }
+                    },
+                    {
+                        "name": "given_name",
+                        "in": "query",
+                        "description": "given name of the author",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "family_name",
+                        "in": "query",
+                        "description": "family name of the book",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Update the author"
+                    },
+                    "404": {
+                        "description": "Show error when author not Found"
+                    }
+                }
+            }
+        },
+        "/api/books": {
+            "get": {
+                "summary": "Finds the list of all books ",
+                "operationId": "1ea73ebde846542f75f27f102baf067f",
+                "responses": {
+                    "200": {
+                        "description": "Browse the list of all books"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Store new book",
+                "operationId": "f793f459b06e946f54c04166bc76187f",
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "description": "Title of the book",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "subtitle",
+                        "in": "query",
+                        "description": "Subtitle of the book",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully Store new books"
+                    }
+                }
+            }
+        },
+        "/api/books/{id}": {
+            "get": {
+                "summary": "Finds Books by book id",
+                "operationId": "d946c9001412fe4bbfa69dc638734745",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Book id to filter by",
+                        "schema": {
+                            "type": "int"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Show selected Book"
+                    },
+                    "404": {
+                        "description": "Show error when Book not Found"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete the book",
+                "operationId": "6e946588a5159f78ff5b31dec61300e7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Book id to filter by",
+                        "schema": {
+                            "type": "int"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully delete the book"
+                    },
+                    "404": {
+                        "description": "Show error when book not Found"
+                    }
+                }
+            },
+            "patch": {
+                "summary": "Update the book",
+                "operationId": "ec90c97426d8e9b709dc5c78cb29ba1e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of the book",
+                        "schema": {
+                            "type": "int"
+                        }
+                    },
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "description": "Title of the book",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "subtitle",
+                        "in": "query",
+                        "description": "Subtitle of the book",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Update the book"
+                    },
+                    "404": {
+                        "description": "Show error when book not Found"
+                    }
+                }
+            }
+        },
+        "/api/genres": {
+            "get": {
+                "summary": "Finds the list of all genres ",
+                "operationId": "8af3149ee50579f5473f32debd2efc4f",
+                "responses": {
+                    "200": {
+                        "description": "Browse the list of all genres"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Store new genre",
+                "operationId": "9c2dd28e55b823a3699b14f174d8d894",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "name of the genre",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "description of the genre",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully Store new genre"
+                    }
+                }
+            }
+        },
+        "/api/genres/{id}": {
+            "get": {
+                "summary": "Finds genre by genre id",
+                "operationId": "0dc073d27e7e2049c9826d8fc093dc06",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Genre id to filter by",
+                        "schema": {
+                            "type": "int"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Show selected genre"
+                    },
+                    "404": {
+                        "description": "Show error when genre not Found"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete the genre",
+                "operationId": "c2022853f5c37c0dc6384e863918b7de",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Genre id to filter by",
+                        "schema": {
+                            "type": "int"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully delete the genre"
+                    },
+                    "404": {
+                        "description": "Show error when genre not Found"
+                    }
+                }
+            },
+            "patch": {
+                "summary": "Update the genre",
+                "operationId": "e0ce3e0d5b509ae71079691fe262f564",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of the genre",
+                        "schema": {
+                            "type": "int"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "name of the genre",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "description of the genre",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Update the genre"
+                    },
+                    "404": {
+                        "description": "Show error when genre not Found"
+                    }
+                }
+            }
+        },
+        "/api/publishers": {
+            "get": {
+                "summary": "Finds Publishers using paginations",
+                "operationId": "1a2d0ed86168642648119028fcc37fc6",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Pages to filter by",
+                        "schema": {
+                            "type": "int"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Browse the list of all publishers"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Store new publisher",
+                "operationId": "2b3349cc5332c81fac6f74dac3ba9f2b",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Name of the publisher",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully Store new publisher"
+                    }
+                }
+            }
+        },
+        "/api/publishers/{id}": {
+            "get": {
+                "summary": "Finds publishers by publisher id",
+                "operationId": "aad892b847c12134abf7faaf1b1dc392",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Publishers id to filter by",
+                        "schema": {
+                            "type": "int"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Show selected publisher"
+                    },
+                    "404": {
+                        "description": "Show error when publisher not Found"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete the publisher",
+                "operationId": "306e72beb9b000a7c88e4b71a520a1fb",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "publisher id to filter by",
+                        "schema": {
+                            "type": "int"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully delete the publisher"
+                    },
+                    "404": {
+                        "description": "Show error when publisher not Found"
+                    }
+                }
+            },
+            "patch": {
+                "summary": "Update the publisher",
+                "operationId": "48cfda49b885baf8fc37220641093647",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Publishers id to filter by",
+                        "schema": {
+                            "type": "int"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Name of the publisher",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Update the publisher"
+                    },
+                    "404": {
+                        "description": "Show error when publisher not Found"
+                    }
+                }
+            }
+        },
         "/api/users": {
             "get": {
                 "summary": "Finds Users using paginations",
@@ -52,7 +534,7 @@
                     "200": {
                         "description": "Show selected user"
                     },
-                    "400": {
+                    "404": {
                         "description": "Show error when user not Found"
                     }
                 }

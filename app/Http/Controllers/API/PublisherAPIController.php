@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PaginateAPIRequest;
 use App\Http\Requests\StorePublisherAPIRequest;
 use App\Http\Requests\UpdatePublisherAPIRequest;
 use App\Models\Publisher;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class PublisherAPIController extends Controller
@@ -15,10 +17,21 @@ class PublisherAPIController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    /**
+     *
+     * @OA\Get(
+     *     path="/api/publishers",
+     *     summary="Finds Publishers using paginations",
+     *     @OA\Parameter(name="page", in="query", description="Pages to filter by", @OA\Schema(type="int")),
+     *     @OA\Response(response="200", description="Browse the list of all publishers")
+     * )
+     */
+    public function index(PaginateAPIRequest $request): JsonResponse
     {
         //
-        $publisher = Publisher::all();
+        $validated = $request->validated();
+        $publisher = Publisher::paginate(10);
+
         return response()->json(
             [
                 'status' => true,
@@ -36,6 +49,15 @@ class PublisherAPIController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
+     */
+    /**
+     *
+     * @OA\Post(
+     *     path="/api/publishers",
+     *     summary="Store new publisher",
+     *     @OA\Parameter(name="name", in="query", description="Name of the publisher", @OA\Schema(type="string")),
+     *     @OA\Response(response="200", description="Successfully Store new publisher")
+     * )
      */
     public function store(StorePublisherAPIRequest $request)
     {
@@ -81,6 +103,16 @@ class PublisherAPIController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
+    /**
+     *
+     * @OA\Get(
+     *     path="/api/publishers/{id}",
+     *     summary="Finds publishers by publisher id",
+     *     @OA\Parameter(name="id", in="path", description="Publishers id to filter by", @OA\Schema(type="int")),
+     *     @OA\Response(response="200", description="Show selected publisher"),
+     *     @OA\Response(response="404", description="Show error when publisher not Found")
+     * )
+     */
     public function show($id)
     {
         //
@@ -120,6 +152,17 @@ class PublisherAPIController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
+     */
+    /**
+     *
+     * @OA\Patch(
+     *     path="/api/publishers/{id}",
+     *     summary="Update the publisher",
+     *     @OA\Parameter(name="id", in="path", description="Publishers id to filter by", @OA\Schema(type="int")),
+     *     @OA\Parameter(name="name", in="query", description="Name of the publisher", @OA\Schema(type="string")),
+     *     @OA\Response(response="200", description="Update the publisher"),
+     *     @OA\Response(response="404", description="Show error when publisher not Found")
+     * )
      */
     public function update(UpdatePublisherAPIRequest $request, $id)
     {
@@ -162,6 +205,16 @@ class PublisherAPIController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
+     */
+    /**
+     *
+     * @OA\Delete(
+     *     path="/api/publishers/{id}",
+     *     summary="Delete the publisher",
+     *     @OA\Parameter(name="id", in="path", description="publisher id to filter by", @OA\Schema(type="int")),
+     *     @OA\Response(response="200", description="Successfully delete the publisher"),
+     *     @OA\Response(response="404", description="Show error when publisher not Found")
+     * )
      */
     public function destroy($id)
     {

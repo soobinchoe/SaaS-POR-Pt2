@@ -16,6 +16,14 @@ class AuthorAPIController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
+    /**
+     *
+     * @OA\Get(
+     *     path="/api/authors",
+     *     summary="Finds the list of all authors ",
+     *     @OA\Response(response="200", description="Browse the list of all authors")
+     * )
+     */
     public function index()
     {
         //
@@ -37,6 +45,16 @@ class AuthorAPIController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
+     */
+    /**
+     *
+     * @OA\Post(
+     *     path="/api/authors",
+     *     summary="Store new author",
+     *     @OA\Parameter(name="given_name", in="query", description="given name of the author", @OA\Schema(type="string")),
+     *     @OA\Parameter(name="family_name", in="query", description="family name of the book", @OA\Schema(type="string")),
+     *     @OA\Response(response="200", description="Successfully Store new author")
+     * )
      */
     public function store(StoreAuthorAPIRequest $request)
     {
@@ -93,6 +111,16 @@ class AuthorAPIController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    /**
+     *
+     * @OA\Get(
+     *     path="/api/authors/{id}",
+     *     summary="Finds authors by author id",
+     *     @OA\Parameter(name="id", in="path", description="Author id to filter by", @OA\Schema(type="int")),
+     *     @OA\Response(response="200", description="Show selected Author"),
+     *     @OA\Response(response="404", description="Show error when Author not Found")
+     * )
+     */
     public function show($id)
     {
         //
@@ -132,6 +160,18 @@ class AuthorAPIController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     */
+    /**
+     *
+     * @OA\Patch(
+     *     path="/api/authors/{id}",
+     *     summary="Update the author",
+     *     @OA\Parameter(name="id", in="path", description="id of the author", @OA\Schema(type="int")),
+     *     @OA\Parameter(name="given_name", in="query", description="given name of the author", @OA\Schema(type="string")),
+     *     @OA\Parameter(name="family_name", in="query", description="family name of the book", @OA\Schema(type="string")),
+     *     @OA\Response(response="200", description="Update the author"),
+     *     @OA\Response(response="404", description="Show error when author not Found")
+     * )
      */
     public function update(UpdateAuthorAPIRequest $request, $id)
     {
@@ -178,6 +218,16 @@ class AuthorAPIController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     */
+    /**
+     *
+     * @OA\Delete(
+     *     path="/api/authors/{id}",
+     *     summary="Delete the author",
+     *     @OA\Parameter(name="id", in="path", description="Author id to filter by", @OA\Schema(type="int")),
+     *     @OA\Response(response="200", description="Successfully delete the author"),
+     *     @OA\Response(response="404", description="Show error when author not Found")
+     * )
      */
     public function destroy($id)
     {
