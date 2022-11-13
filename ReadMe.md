@@ -1,23 +1,26 @@
-# Books, Authors and a Library to Go!
+# SaaS Portpolio part 2
 
-ToDo: Add your own SHORT explanation of the portfolio project
+A learning Portporlio project to show the use of Laravel in the creation of an application with API Back-end components. 
 
 # About
 
-ToDo: Complete the list of systems, plugins, packages and other items used,
-with the version number replacing the v? in the ().
+This application provides a number of features.
+
+API interface
+* Author API BREAD
+* Book API BREAD
+* Publisher API BREAD
+* User API BREAD
+* Genre API BREAD
 
 To develop this application we are using:
 - [Laravel (v9+)](https://laravel.com)
-- [Laravel Sanctum (v?)](https://laravel.com/docs/9.x/sanctum)
-- [Postman (v?)](#)
-- [Blade (v?)](https://laravel.com/docs/9.x/blade)
-- [Tailwind CSS (v?)](https://tailwindcss.com)
-- [... (v?)](#)
-- [... (v?)](#)
-- [... (v?)](#)
-- [... (v?)](#)
-- [... (v?)](#)
+- [Laravel Sanctum]
+- [Laravel Breeze]
+- [Postman]
+- [Docker Desktop]
+- [L5-Swagger]
+
 
 ## Table of Contents
 
@@ -31,31 +34,49 @@ To develop this application we are using:
 
 ## Requirements
 
-ToDo: Add list of requirements for the project to run.
+* PHP
+* Laravel
+* MariaDB
+* Docker Desktop
 
 ## Installation
 
-TODO: How to install the base project. 
+- Fork a copy of the repository or clone copy
+- Run Docker-Desktop
+- Change into the repository folder
+- Duplicate and rename the .env.example file to .env
+- Edit the new .env file (localhost to mariadb)
+- execute following command
+  docker run --rm \
+  -u "$(id -u):$(id -g)" \
+  -v "$(pwd):/var/www/html" \
+  -w /var/www/html \
+  laravelsail/php81-composer:latest \
+  composer install --ignore-platform-reqs
+- sail up
 
 ## How to Use
 
-TODO: Instructions on how to use the project, This includes details of 
-default users and other details.
+Run docker desktop then sail up project folder,
+Check out API document for implemented API in
+http://localhost/api/document
+
 
 # Credits
 
-TODO: Reference any work contributed by other people, tutorials and other resources.
-
+Reference :
+Adrian Gould (https://github.com/AdyGCode/ICT50120-SaaS-Library.git)
+ICT50120 SaaS-Library
 
 # Contributing
 
 Contributors to this project are:
 - Adrian Gould (Lecturer, North Metropolitan TAFE, Perth, WA, AU)
-- YOUR NAME AND EMAIL HERE
+- Soobin Choe (Student, North Metropolitan TAFE, Perth, WA, AU)
 
 
 ## License
 
-TODO: Add a license
+This project is open-sourced software licensed under the MIT license.
 
 
