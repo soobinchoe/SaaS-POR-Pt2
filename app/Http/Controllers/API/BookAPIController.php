@@ -8,7 +8,7 @@ use App\Http\Requests\UpdateBookAPIRequest;
 use App\Models\Book;
 use Illuminate\Http\Request;
 
-class BookAPIController extends Controller
+class BookAPIController extends ApiBaseController
 {
     /**
      * Display a listing of the resource.
@@ -27,15 +27,9 @@ class BookAPIController extends Controller
     {
         //
         $books = Book::all();
-        return response()->json(
-            [
-                'status' => true,
-                'message' => "Retrieved successfully.",
-                'data' => [
-                    'books' => $books,
-                ],
-            ],
-            200
+        return $this->sendResponse(
+            $books,
+            "Retrieved successfully."
         );
     }
 
@@ -67,29 +61,13 @@ class BookAPIController extends Controller
         if (is_null($book)) {
             $book = Book::create($validated);
 
-            $response = response()->json(
-                [
-                    'success' => true,
-                    'message' => "Created successfully.",
-                    'data' => [
-                        'book' => $book,
-                    ],
-                ],
-                200
-            );
-        } else {
-            $response = response()->json(
-                [
-                    'status' => false,
-                    'message' => "Book exists.",
-                    'data' => [
-                        'book' => $book,
-                    ],
-                ],
-                202
+            return $this->sendResponse(
+                $book,
+                "Created successfully."
             );
         }
-        return $response;
+
+        return $this->sendError("Book exists.");
     }
 
     /**
@@ -115,30 +93,13 @@ class BookAPIController extends Controller
             ->where('id', $id)
             ->get();
 
-        $response = response()->json(
-            [
-                'status' => false,
-                'message' => "book Not Found",
-                'data' => [
-                    'books' => null,
-                ],
-            ],
-            404  # Not Found
-        );
-
         if ($book->count() > 0) {
-            $response = response()->json(
-                [
-                    'status' => true,
-                    'message' => "Retrieved successfully.",
-                    'data' => [
-                        'books' => $book,
-                    ],
-                ],
-                200  # Ok
+            return $this->sendResponse(
+                $book,
+                "Retrieved successfully.",
             );
         }
-        return $response;
+        return $this->sendError("Book Not Found");
 
 
     }
@@ -181,17 +142,14 @@ class BookAPIController extends Controller
             $book['title'] = $validated['title'];
             $book['subtitle'] = $validated['subtitle'] ?? null;
             $book->save();
-            $response = response()->json(
-                [
-                    'status' => true,
-                    'message' => "Updated successfully.",
-                    'book' => $book
-                ],
-                200  # Ok
+
+            return $this->sendResponse(
+                $book,
+                "Updated successfully.",
             );
         }
 
-        return $response;
+        return $this->sendError("Unable to update: Book Not Found" );
     }
 
     /**
@@ -217,28 +175,16 @@ class BookAPIController extends Controller
 
         $destroyedBook = $book;
 
-        $response = response()->json(
-            [
-                'status' => false,
-                'message' => "Unable to delete: Book Not Found",
-                'authors' => null
-            ],
-            404  # Not Found
-        );
-
         if (!is_null($book) && $book->count() > 0) {
             $book->delete();
-            $response = response()->json(
-                [
-                    'status' => true,
-                    'message' => "Book deleted.",
-                    'authors' => $destroyedBook
-                ],
-                200  # Ok
+
+            return $this->sendResponse(
+                $destroyedBook,
+                "Deleted successfully.",
             );
         }
 
-        return $response;
+        return $this->sendError("Unable to remove: Book Not Found");
     }
 
 }

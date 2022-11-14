@@ -5,6 +5,109 @@
         "version": "0.1"
     },
     "paths": {
+        "/api/register": {
+            "post": {
+                "summary": "Register new user",
+                "operationId": "72310a6d9260c39f210ba54c35a12b41",
+                "parameters": [
+                    {
+                        "name": "given_name",
+                        "in": "query",
+                        "description": "given name of the user",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "family_name",
+                        "in": "query",
+                        "description": "family name of the user",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "email address of the user",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "password of the user",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully Register new User"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "summary": "login user",
+                "operationId": "a36859cc9285d70ef9eb697ebd3b2733",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "email address of the user",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "password of the user",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully logged in"
+                    },
+                    "401": {
+                        "description": "Login information is invalid."
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "summary": "logout user - Needs Futher testing",
+                "operationId": "b244ee3d05d3f6a167e0bf9e2a322e07",
+                "parameters": [
+                    {
+                        "name": "access_token",
+                        "in": "header",
+                        "description": "email address of the user",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully logged out the User"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
         "/api/authors": {
             "get": {
                 "summary": "Finds the list of all authors ",

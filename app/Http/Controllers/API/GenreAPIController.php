@@ -8,7 +8,7 @@ use App\Http\Requests\UpdateGenreAPIRequest;
 use App\Models\Genre;
 use Illuminate\Http\Request;
 
-class GenreAPIController extends Controller
+class GenreAPIController extends ApiBaseController
 {
     /**
      * Display a listing of the resource.
@@ -27,31 +27,15 @@ class GenreAPIController extends Controller
     {
         //
         $genres = Genre::all();
-        $response = response()->json(
-            [
-                'status' => false,
-                'message' => "Genre Not Found",
-                'data' => [
-                    'Genres' => null,
-                ],
-            ],
-            404  # Not Found
-        );
 
         if (!is_null($genres)) {
-            $response = response()->json(
-                [
-                    'status' => true,
-                    'message' => "Retrieved successfully.",
-                    'data' => [
-                        'genre' => $genres,
-                    ],
-                ],
-               200
+            return $this->sendResponse(
+                $genres,
+                "Retrieved successfully."
             );
         }
 
-        return $response;
+        return $this->sendError("Genre not exists.");
     }
 
     /**
@@ -82,29 +66,13 @@ class GenreAPIController extends Controller
         if (is_null($genre)) {
             $genre = Genre::create($validated);
 
-            $response = response()->json(
-                [
-                    'success' => true,
-                    'message' => "Created successfully.",
-                    'data' => [
-                        'genre' => $genre,
-                    ],
-                ],
-                200
-            );
-        } else {
-            $response = response()->json(
-                [
-                    'status' => false,
-                    'message' => "Genre exists.",
-                    'data' => [
-                        'genre' => $genre,
-                    ],
-                ],
-                202
+            return $this->sendResponse(
+                $genre,
+                "Created successfully."
             );
         }
-        return $response;
+
+        return $this->sendError("Genre exists.");
     }
 
     /**
@@ -130,30 +98,13 @@ class GenreAPIController extends Controller
             ->where('id', $id)
             ->get();
 
-        $response = response()->json(
-            [
-                'status' => false,
-                'message' => "Author Not Found",
-                'data' => [
-                    'authors' => null,
-                ],
-            ],
-            404  # Not Found
-        );
-
         if ($genre->count() > 0) {
-            $response = response()->json(
-                [
-                    'status' => true,
-                    'message' => "Retrieved successfully.",
-                    'data' => [
-                        'genre' => $genre,
-                    ],
-                ],
-                200  # Ok
+            return $this->sendResponse(
+                $genre,
+                "Retrieved successfully.",
             );
         }
-        return $response;
+        return $this->sendError("Genre Not Found");
 
     }
 
@@ -182,30 +133,18 @@ class GenreAPIController extends Controller
         $validated = $request->validated();
         $genre = Genre::query()->where('id', $id)->first();
 
-        $response = response()->json(
-            [
-                'status' => false,
-                'message' => "Unable to update: Genre Not Found",
-                'genre' => null
-            ],
-            404  # Not Found
-        );
-
         if (!is_null($genre) && $genre->count() > 0) {
             $genre['name'] = $validated['name'];
             $genre['description'] = $validated['description'] ?? null;
 
             $genre->save();
-            $response = response()->json(
-                [
-                    'status' => true,
-                    'message' => "Updated successfully.",
-                    'genre' => $genre
-                ],
-                200  # Ok
+
+            return $this->sendResponse(
+                $genre,
+                "Updated successfully.",
             );
         }
-        return $response;
+        return $this->sendError("Unable to update: Genre Not Found" );
     }
 
     /**
@@ -231,27 +170,15 @@ class GenreAPIController extends Controller
 
         $destroyedGenre = $genre;
 
-        $response = response()->json(
-            [
-                'status' => false,
-                'message' => "Unable to delete: Genre Not Found",
-                'genre' => null
-            ],
-            404  # Not Found
-        );
-
         if (!is_null($genre) && $genre->count() > 0) {
             $genre->delete();
-            $response = response()->json(
-                [
-                    'status' => true,
-                    'message' => "Genre deleted.",
-                    'genre' => $destroyedGenre
-                ],
-                200  # Ok
+
+            return $this->sendResponse(
+                $destroyedGenre,
+                "Deleted successfully.",
             );
         }
 
-        return $response;
+        return $this->sendError("Unable to remove: Genre Not Found");
     }
 }
