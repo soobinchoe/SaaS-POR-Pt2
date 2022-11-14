@@ -7,6 +7,7 @@ use App\Http\Requests\StoreAuthorAPIRequest;
 use App\Http\Requests\UpdateAuthorAPIRequest;
 use App\Models\Author;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 
 class AuthorAPIController extends ApiBaseController
 {
@@ -23,10 +24,10 @@ class AuthorAPIController extends ApiBaseController
      *     @OA\Response(response="200", description="Browse the list of all authors")
      * )
      */
-    public function index(PaginateAPIRequest $request): \Illuminate\Http\Response
+    public function index(PaginateAPIRequest $request): JsonResponse
     {
         //
-        $authors = Author::paginate($request['per_page']);
+        $authors = Author::with('books')->paginate($request['per_page']);
 
         return $this->sendResponse(
             $authors,
@@ -97,12 +98,10 @@ class AuthorAPIController extends ApiBaseController
      *     @OA\Response(response="404", description="Show error when Author not Found")
      * )
      */
-    public function show($id)
+    public function show($id): JsonResponse
     {
         //
-        $author = Author::query()
-            ->where('id', $id)
-            ->get();
+        $author = Author::with('books')->find($id);
 
         if ($author->count() > 0) {
             return $this->sendResponse(

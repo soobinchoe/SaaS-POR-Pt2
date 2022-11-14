@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PaginateAPIRequest;
 use App\Http\Requests\StoreBookAPIRequest;
 use App\Http\Requests\UpdateBookAPIRequest;
 use App\Models\Book;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class BookAPIController extends ApiBaseController
@@ -23,10 +25,11 @@ class BookAPIController extends ApiBaseController
      *     @OA\Response(response="200", description="Browse the list of all books")
      * )
      */
-    public function index()
+    public function index(PaginateAPIRequest $request): JsonResponse
     {
         //
-        $books = Book::all();
+        $books = Book::with('authors')->paginate(20);
+
         return $this->sendResponse(
             $books,
             "Retrieved successfully."
@@ -88,14 +91,12 @@ class BookAPIController extends ApiBaseController
      */
     public function show($id)
     {
-        //
-        $book = Book::query()
-            ->where('id', $id)
-            ->get();
 
-        if ($book->count() > 0) {
+        $books = Book::with('authors')->find($id);
+
+        if ($books->count() > 0) {
             return $this->sendResponse(
-                $book,
+                $books,
                 "Retrieved successfully.",
             );
         }
@@ -128,15 +129,6 @@ class BookAPIController extends ApiBaseController
         //
         $validated = $request->validated();
         $book = Book::query()->where('id', $id)->first();
-
-        $response = response()->json(
-            [
-                'status' => false,
-                'message' => "Unable to update: Book Not Found",
-                'book' => null
-            ],
-            404  # Not Found
-        );
 
         if (!is_null($book) && $book->count() > 0) {
             $book['title'] = $validated['title'];
