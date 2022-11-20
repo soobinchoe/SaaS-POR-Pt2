@@ -10,7 +10,7 @@ class ApiBaseController extends Controller
     /**
      * success response method.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function sendResponse($result, $message)
     {

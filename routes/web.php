@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\API\BookAPIController;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\StaticPageController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,7 +17,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [StaticPageController::class, 'home'])->name('home');
-
+Route::get('/books', [BookController::class, 'index']);
+//Route::get('/dashboard', [StaticPageController::class, 'dashboard'])->name('dashboard');
+//Route::resource('books', BookAPIController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
