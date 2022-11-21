@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-stone-700 text-stone-300 border-b border-stone-100">
+<nav x-data="{ open: false }" class="bg-slate-700 text-slate-300 border-b border-slate-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -9,7 +9,6 @@
                         <x-application-logo class="block h-10 w-auto fill-current text-red-400"></x-application-logo>
                     </a>
                 </div>
-
                 <!-- Navigation Links -->
 {{--                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">--}}
 {{--                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')" class="text-stone-300">--}}

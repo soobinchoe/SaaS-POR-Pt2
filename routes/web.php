@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [StaticPageController::class, 'home'])->name('home');
-Route::get('/books', [BookController::class, 'index']);
+Route::resource('books', BookController::class);
 //Route::get('/dashboard', [StaticPageController::class, 'dashboard'])->name('dashboard');
 //Route::resource('books', BookAPIController::class);
 

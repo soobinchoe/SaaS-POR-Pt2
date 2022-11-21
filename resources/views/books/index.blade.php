@@ -13,7 +13,6 @@
                         <thead>
                             <th>#</th>
                             <th>Title</th>
-                            <th>Subtitle</th>
                             <th>Authors</th>
                             <th>Genre</th>
                             <th>Actions</th>
@@ -23,8 +22,16 @@
                             <tr class="border-b border-stone-300 hover:bg-stone-200">
                                 <td class="p-2 text-right">{{ $loop->iteration }}</td>
                                 <td class="p-2">{{ $book->title }}</td>
-                                <td class="p-2">{{ $book->subtitle }}</td>
-                                <td class="p-2">{{ $book->authors["given_name"] }}</td>
+                                <td class="p-2">
+                                    @foreach($book->authors as $author)
+                                        @if($loop->index<5)
+                                            <li>{{$author->given_name}}</li>
+                                        @endif
+                                    @endforeach
+                                    @if($book->authors()->count()>=5)
+                                        <li class="text-stone-600">{{ __("and others") }}</li>
+                                    @endif
+                                </td>
                                 <td class="p-2">{{ $book->genre }}</td>
                                 <td class="p-2">
                                     View

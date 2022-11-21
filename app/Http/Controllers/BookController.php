@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 //use App\Http\Requests\StoreBookRequest;
 //use App\Http\Requests\UpdateBookRequest;
+use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
 
 class BookController extends Controller
@@ -11,14 +12,13 @@ class BookController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return string
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
         //
-
-
-        return "index";
+        $books= Book::paginate(10);
+        return view('books.index', compact(['books']));
     }
 
     /**
@@ -40,28 +40,32 @@ class BookController extends Controller
     public function store(StoreBookRequest $request)
     {
         //
+
     }
 
     /**
      * Display the specified resource.
      *
      * @param \App\Models\Book $book
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function show(Book $book)
     {
         //
+        $authors = $book->with('authors')->find($book);
+        return view('books.show', compact(['authors','book',]));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param \App\Models\Book $book
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit(Book $book)
     {
         //
+        return view('books.edit', compact(['book',]));
     }
 
     /**
@@ -74,6 +78,14 @@ class BookController extends Controller
     public function update(UpdateBookRequest $request, Book $book)
     {
         //
+        foreach ($request->validated() as $validKey => $validValue) {
+            $book[$validKey] = $validValue;
+        }
+
+        $book->save();
+
+        return redirect()->route('books.index')
+            ->with('success', 'Book updated successfully.');
     }
 
     /**
