@@ -2,10 +2,13 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UpdateAuthorRequest extends FormRequest
+class StoreBookRequest extends FormRequest
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -24,14 +27,14 @@ class UpdateAuthorRequest extends FormRequest
     public function rules()
     {
         return [
-            'given_name' => [
-                'required_without:family_name',
-                'max:127',
+            'title' => [
+                'required',
+                'max:255',
             ],
-            'family_name' => [
-                'required_without:given_name',
-                'max:127',
+            'subtitle' => [
+                'max:255',
             ],
         ];
     }
+
 }

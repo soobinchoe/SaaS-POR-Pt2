@@ -5,6 +5,9 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
 {
@@ -17,17 +20,42 @@ class UserSeeder extends Seeder
     {
         //
         $seedUsers = [
-            [ 'id' => '1', 'given_name'	=> 'Ad', 'family_name' => 'Ministrator', 'email' => 'admin@example.com', 'password' =>	'Password1!', ],
-            [ 'id' => '2', 'given_name'	=> 'Soobin', 'family_name' => 'Choe', 'email' => 'soobin@example.com', 'password' =>	'Password1!', ],
-            [ 'id' => '45', 'given_name'=> 'Jacques', 'family_name' => 'd’Carre', 'email' => 'jacques@example.com', 'password' =>	'Password1!', ],
-            [ 'id' => '46', 'given_name'=> 'Dee', 'family_name' => 'Leet', 'email' => 'dee@example.com', 'password' =>	'Password1!', ],
-            [ 'id' => '47', 'given_name'=> 'Eileen', 'family_name' => '	Dover', 'email' => 'eileen@example.com', 'password' =>	'Password1!', ],
-            [ 'id' => '48', 'given_name'=> 'Booker', 'family_name' => '	Holliday', 'email' => 'booker@example.com', 'password' => '	Password1!', ],
-            [ 'id' => '49', 'given_name'=> 'Fallon', 'family_name' => '	Dover', 'email' => 'fallon@example.com', 'password' =>	'Password1!', ],
+            [
+                'name' => 'Ad Ministrator',
+                'email' => "ad.ministrator@example.com",
+                'password' => 'Password1',
+                'roles' => ['admin', 'member', 'staff'],
+            ],
+            [
+                'name' => 'Annie Wun',
+                'email' => "annie.wun@example.com",
+                'password' => 'Password1',
+                'roles' => ['member'],
+            ],
+            [
+                'name' => 'Andy Mann',
+                'email' => "andy.mann@example.com",
+                'password' => 'Password1',
+                'roles' => ['staff', 'member'],
+            ],
         ];
 
-        foreach ($seedUsers as $seedUser) {
-            User::create($seedUser);
+        foreach ($seedUsers as $newUser) {
+            $newUser['password'] = Hash::make($newUser['password']);
+            $user = User::create([
+                'name' => $newUser['name'],
+                'email' => $newUser['email'],
+                'password' => $newUser['password'],
+            ]);
+
+            foreach ($newUser['roles'] as $role) {
+                $newRole = Role::whereName($role)->first();
+                if (!is_null($newRole)) {
+                    $permissions = Permission::pluck('id', 'id')->all();
+                    $newRole->syncPermissions($permissions);
+                    $user->assignRole([$newRole->id]);
+                }
+            }
         }
 
     }

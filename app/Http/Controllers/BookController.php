@@ -4,11 +4,17 @@ namespace App\Http\Controllers;
 
 //use App\Http\Requests\StoreBookRequest;
 //use App\Http\Requests\UpdateBookRequest;
+use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
 
 class BookController extends Controller
 {
+    function __construct()
+    {
+
+        }
+
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +23,7 @@ class BookController extends Controller
     public function index()
     {
         //
-        $books= Book::paginate(10);
+        $books= Book::paginate(20);
         return view('books.index', compact(['books']));
     }
 
@@ -29,18 +35,23 @@ class BookController extends Controller
     public function create()
     {
         //
+        return view('books.add');
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param \App\Http\Requests\StoreBookRequest $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreBookRequest $request)
     {
         //
 
+        $book = Book::create($request->validated());
+
+        return redirect()->route('books.index')
+            ->with('success', "Book created successfully.");
     }
 
     /**
@@ -97,5 +108,20 @@ class BookController extends Controller
     public function destroy(Book $book)
     {
         //
+        $book->delete();
+
+        return redirect()->route('books.index')
+            ->with('success', 'Book deleted successfully.');
+    }
+
+    /**
+     * Verify the removal from storage.
+     *
+     * @param  \App\Models\Book  $book
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function delete(Book $book)
+    {
+        return view('books.delete', compact(['book',]));
     }
 }

@@ -9,7 +9,12 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <table class="table">
+                    <a href="{{ route('books.create') }}"
+                       class="rounded mb-6 p-2 bg-sky-500 text-white text-center w-1/5 min-w-64">Add new Book</a>
+                    @empty($books)
+                        <p>sorry no books.</p>
+                    @else
+                    <table class="table w-full">
                         <thead>
                             <th>#</th>
                             <th>Title</th>
@@ -24,19 +29,16 @@
                                 <td class="p-2">{{ $book->title }}</td>
                                 <td class="p-2">
                                     @foreach($book->authors as $author)
-                                        @if($loop->index<5)
-                                            <li>{{$author->given_name}}</li>
+                                        @if($loop->index<1)
+                                            <p>{{$author->given_name}} {{$author->family_name}}</p>
                                         @endif
                                     @endforeach
-                                    @if($book->authors()->count()>=5)
-                                        <li class="text-stone-600">{{ __("and others") }}</li>
-                                    @endif
                                 </td>
                                 <td class="p-2">{{ $book->genre }}</td>
                                 <td class="p-2">
-                                    View
-                                    Edit
-                                    Delete
+                                        <a class="btn btn-info" href="{{ route('books.show',$book->id) }}">View</a>
+                                        <a class="btn btn-primary" href="{{ route('books.edit',$book->id) }}">Edit</a>
+                                        <a class="btn btn-primary" href="{{ route('books.delete',$book->id) }}">Delete</a>
                                 </td>
                                 @endforeach
                             </tr>
@@ -49,6 +51,7 @@
                         </tr>
                         </tfoot>
                     </table>
+                    @endempty
                 </div>
             </div>
         </div>
